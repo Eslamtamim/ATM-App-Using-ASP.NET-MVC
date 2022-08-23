@@ -1,0 +1,28 @@
+﻿@model Account
+
+<div>
+
+
+	<h3>
+		Hi, please enter the amount of money you want to put in
+	</h3>
+	<form method="post" class="d-flex flex-column align-items-center mt-5" asp-action="Deposite">
+
+
+		<h3 class="text-success fw-bold">Deposite</h3>
+		<div class="form-group">
+
+			<label class="form-label">Amount</label>
+			<input class="form-control" name="Amount">
+
+			<button type="submit" new { class="btn bg-success text-white my-4 " }>Deposite</button>
+			<a class="btn btn-outline-success" href="/Home/Accountinfo/@Model.Id">Back</a>
+
+
+		</div>
+
+	</form>
+
+
+</div>
+

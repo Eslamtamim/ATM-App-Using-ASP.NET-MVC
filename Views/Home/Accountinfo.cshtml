@@ -1,0 +1,41 @@
+﻿@model Account
+
+
+<div>
+
+
+	<h1>Welcome Mr/ @Model.FirstName @Model.LastName </h1>
+	<p class="opacity-75 text-success">Current Balance is <span class="fw-bolder">$@Model.Balance</span></p>
+	<h4> <br> What would you like to do today.</h4>
+
+
+
+	<div class="container d-flex flex-row justify-content-sm-around m-4 align-items-lg-center">
+
+		<div class="card" style="width: 18rem;">
+			<img src="~/Withdraw.jpg" class="card-img-top" alt="...">
+			<div class="card-body">
+				<h5 class="card-title">Withdraw Money</h5>
+				@*				<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+				*@					<a href="@Url.Action("Withdraw", "Account"  , new { id = Model.Id} )" class="btn btn-outline-success my-3">Withdraw</a>
+			</div>
+		</div>
+
+		<div class="card" style="width: 18rem;">
+			<img src="~/Deposit.jpg" class="card-img-top mt-3" alt="...">
+			<div class="card-body">
+				<h5 class="card-title">Deposite Money</h5>
+				<a href="@Url.Action("Deposite", "Account"  , new { id = Model.Id} )" class="btn btn-outline-success my-3">Deposite</a>
+
+			</div>
+		</div>
+		<div class="card" style="width: 18rem; ">
+			<img src="~/transfer.jpg" class="card-img-top " alt="...">
+			<div class="card-body">
+				<h5 class="card-title">Transfer Money</h5>
+				<a href="@Url.Action("Transfer", "Account"  , new { id = Model.Id} )" class="btn btn-outline-success my-3">Transfer</a>
+			</div>
+		</div>
+	</div>
+
+</div>

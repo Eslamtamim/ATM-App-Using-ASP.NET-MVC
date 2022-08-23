@@ -1,0 +1,205 @@
+﻿@model Account
+
+@{
+
+	ViewData["Title"] = "Sign up Page";
+
+	List<string> Governments = new List<string>(){"Alexandria Governorate",
+"Aswan Governorate",
+"Asyut Governorate",
+"Beheira Governorate",
+"Beni Suef Governorate",
+"Cairo Governorate",
+"Dakahlia Governorate",
+"Damietta Governorate",
+"Faiyum Governorate",
+"Gharbia Governorate",
+"Giza Governorate",
+"Ismailia Governorate",
+"Kafr El Sheikh Governorate",
+"Luxor Governorate",
+"Matruh Governorate",
+"Minya Governorate",
+"Monufia Governorate",
+"New Valley Governorate",
+"North Sinai Governorate",
+"Port Said Governorate[5]",
+"Qalyubia Governorate",
+"Qena Governorate",
+"Red Sea Governorate",
+"Sharqia Governorate",
+"Sohag Governorate",
+"South Sinai Governorate",
+"Suez Governorate"};
+}
+
+
+<div>
+
+	<h2>Hi Welcome to the Sign up page</h2>
+
+	@using (Html.BeginForm("signup")){
+
+		@Html.AntiForgeryToken()
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Id)
+			@Html.TextBoxFor(m => m.Id , new { @class = "form-control"})
+			@Html.ValidationMessageFor(m=>m.Id , null ,new { @class = "text-danger"})
+		</div>
+
+
+		<div class="form-group ">
+			@Html.LabelFor(m => m.FirstName)
+			@Html.TextBoxFor(m => m.FirstName , new { @class = "form-control"})
+			@Html.ValidationMessageFor(m=>m.FirstName , null ,new { @class = "text-danger"})
+		</div>
+
+
+		<div class="form-group ">
+			@Html.LabelFor(m => m.LastName)
+			@Html.TextBoxFor(m => m.LastName , new { @class = "form-control"})
+			@Html.ValidationMessageFor(m=>m.LastName , null ,new { @class = "text-danger"})
+		</div>
+
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Pin)
+			@Html.PasswordFor(m => m.Pin , new { @class = "form-control"})
+			@Html.ValidationMessageFor(m=>m.Pin , null ,new { @class = "text-danger"})
+		</div>
+
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Email)
+			@Html.TextBoxFor(m => m.Email , new { @class = "form-control"})
+			@Html.ValidationMessageFor(m=>m.Email , null ,new { @class = "text-danger"})
+		</div>
+
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.PhoneNumber)
+			@Html.TextBoxFor(m => m.PhoneNumber , new { @class = "form-control"})
+			@Html.ValidationMessageFor(m=>m.PhoneNumber , null ,new { @class = "text-danger"})
+		</div>
+
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.City)
+			@Html.DropDownListFor(m => m.City ,new SelectList(Governments ,"City"),"",new { @class = "form-control"})
+			@Html.ValidationMessageFor(m=>m.City , null ,new { @class = "text-danger"})
+		</div>
+
+
+		<div class="form-group">
+			@Html.LabelFor(m => m.Balance)
+			@Html.TextBoxFor(m => m.Balance , new { @class = "form-control"})
+			@Html.ValidationMessageFor(m=>m.Balance , null ,new { @class = "text-danger"})
+		</div>
+			<button type="submit" new { class="btn bg-success text-white my-4" }>Register</button>
+
+
+	}
+
+	
+
+</div>
+
+@*@{
+	void withdraw()
+	{
+		var amount = Request.Form["amount"];
+		AccountDbContext context = new AccountDbContext();
+		var account = context.Accounts.Find(id);
+		account.Balance -= amount;
+		context.SaveChanges();
+	}
+}
+*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<form asp-action="signup" method="post">
+		<h3 class="text-primary fw-bold">Account Form</h3>
+
+
+
+		<div class="form-group">
+
+
+			<div class="form-group">
+				<label asp-for="Id" class="form-label">National ID<span class="text-danger">*</span></label>
+				<input asp-for="Id" class="form-control">
+			</div>
+
+			<div>
+				<label asp-for="FirstName" class="form-label">First Name<span class="text-danger">*</span></label>
+				<input asp-for="FirstName" class="form-control" />
+			</div>
+
+			<div class="form-group">
+				<label asp-for="LastName" class="form-label">Last Name<span class="text-danger">*</span></label>
+				<input asp-for="LastName"
+					   class="form-control" />
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Pin" class="form-label">PIN<span class="text-danger">*</span></label>
+				<input type="password" asp-for="Pin"
+					   class="form-control" />
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Email" class="form-label">E-mail<span class="text-danger">*</span></label>
+				<input asp-for="Email"
+					   class="form-control" />
+			</div>
+
+
+			<div class="form-group">
+				<label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+				<input asp-for="PhoneNumber"
+					   class="form-control" />
+			</div>
+
+			<div class="form-group">
+				<label asp-for="City" class="form-label">Government</label>
+				<select asp-for="City" class="form-select" >
+					<option>
+						Select Your Government--
+					</option>
+					<option>
+						----------------------------
+					</option>
+					@foreach (var city in Governments)
+					{
+						<option>
+							@city
+						</option>
+					}
+				</select>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Balance" class="form-label">Starting Balance</label>
+				<input asp-for="Balance" class="form-control" />
+			</div>
+
+			<button type="submit" new { class="btn bg-success text-white my-4" }>Register</button>
+		</div>
+
+	</form>*@
