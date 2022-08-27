@@ -63,7 +63,7 @@ namespace mvcTest1.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Account");
+                    b.ToTable("Account", (string)null);
                 });
 #pragma warning restore 612, 618
         }

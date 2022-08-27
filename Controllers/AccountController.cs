@@ -7,7 +7,7 @@ namespace mvcTest1.Controllers
 	public class AccountController : Controller
 	{
 
-        AccountDbContext context = new AccountDbContext();
+        AccountDbContext context = new();
 
 
 
@@ -15,8 +15,10 @@ namespace mvcTest1.Controllers
         public IActionResult Edit(string id)
         {
             var account = context.Accounts.FirstOrDefault(context => context.Id == id);
+            ViewBag.PinError = true;
 
             return View(account);
+
         }
 
 
@@ -25,28 +27,42 @@ namespace mvcTest1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Account a)
         {
-            if (ModelState.IsValid)
-            {
-                context.Accounts.Update(a);
-                context.SaveChanges();
+            
 
-                return RedirectToAction("AllAccounts", "Home");
+            if (Request.Form["Pin"] == Request.Form["Pincon"])
+            {
+                if (ModelState.IsValid)
+                {
+                    context.Accounts.Update(a);
+                    context.SaveChanges();
+
+                    return RedirectToAction("AllAccounts", "Home");
+                }
+                return View();
+
             }
-            return View();
+            else
+            {
+             
+                ViewBag.PinError = false;
+                List<string> Governments = new() { "Alexandria", "Aswan", "Asyut", "Beheira", "Beni Suef", "Cairo", "Dakahlia", "Damietta", "Faiyum", "Gharbia", "Giza", "Ismailia", "Kafr El Sheikh", "Luxor", "Matruh", "Minya", "Monufia", "New Valley", "North Sinai", "Port Said[5]", "Qalyubia", "Qena", "Red Sea", "Sharqia", "Sohag", "South Sinai", "Suez" };
+                ViewBag.Government = Governments;
+
+                return View("Edit", a);
+            }
+
+            
         }
 
-        [HttpDelete]
+        
         public IActionResult Delete(string id)
         {
-
             var account = context.Accounts.FirstOrDefault(context => context.Id == id);
 
-            context.Accounts.Remove(account);
+                context.Accounts.Remove(account);
                 context.SaveChanges();
 
                 return RedirectToAction("AllAccounts", "Home");
-           
-          
         }
 
         [HttpGet]
@@ -58,7 +74,7 @@ namespace mvcTest1.Controllers
 
         [HttpPost]
 
-        public IActionResult Withdraw(string? Id, int? amount)
+        public IActionResult Withdraw(string? Id, int amount)
         {
             var account = context.Accounts.FirstOrDefault(context => context.Id == Id);
             string Amount = Request.Form["Amount"];
@@ -75,8 +91,7 @@ namespace mvcTest1.Controllers
         }
 
         [HttpPost]
-
-        public IActionResult Deposite(string? Id, int? amount)
+        public IActionResult Deposite(string Id, int amount)
         {
             var account = context.Accounts.FirstOrDefault(context => context.Id == Id);
             string Amount = Request.Form["Amount"];

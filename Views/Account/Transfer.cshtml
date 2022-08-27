@@ -6,26 +6,48 @@
 	<h3>
 		Hi, please enter the amount of money you want to Transfer
 	</h3>
-	<form method="post" class="d-flex flex-column align-items-center mt-5" asp-action="Transfer">
+	@*<form method="post" class="d-flex flex-column align-items-center mt-5" asp-action="Transfer">
 
 
+	<h3 class="text-success fw-bold">Transfer</h3>
+	<div class="form-group">
+
+	<label class="form-label">Amount</label>
+	<input class="form-control" name="Amount">
+	<label class="form-label">User</label>
+	<input class="form-control" name="user">
+	<p class="text-warning fw-bolder">Please enter the ID,Email or PhoneNumber of the user getting this money</p>
+
+	<button type="submit" new { class="btn bg-success text-white my-4 " }>Transfer</button>
+	<a class="btn btn-outline-success" href="/Home/Accountinfo/@Model.Id">Back</a>
+
+
+	</div>
+
+	</form>*@
+
+
+	@using (Html.BeginForm("Transfer", "Account", FormMethod.Post, new { @class = "d-flex flex-column align-items-center mt-5"}))
+	{
 		<h3 class="text-success fw-bold">Transfer</h3>
+
 		<div class="form-group">
+			@Html.Label("Amount")
+			@Html.TextBox("Amount" , null, new { @class = "form-control" , Placeholder = "Enter The Amount"})
+	
+			@Html.Label("User")
+			@Html.TextBox("User", null,  new { @class = "form-control" , Placeholder = "ID, Email or PhoneNumber"})
 
-			<label class="form-label">Amount</label>
-			<input class="form-control" name="Amount">
-			<label class="form-label">User</label>
-			<input class="form-control" name="user">
-			<p class="text-warning fw-bolder">Please enter the ID,Email or PhoneNumber of the user getting this money</p>
+@*			<p class="text-warning fw-bolder">Please  getting this money</p>
+*@
+		</div>
 
+		<div class="form-group">
 			<button type="submit" new { class="btn bg-success text-white my-4 " }>Transfer</button>
 			<a class="btn btn-outline-success" href="/Home/Accountinfo/@Model.Id">Back</a>
 
-
 		</div>
-
-	</form>
+	}
 
 
 </div>
-

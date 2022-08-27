@@ -3,34 +3,10 @@
 @{
 
 	ViewData["Title"] = "Sign up Page";
+//	List<string> Governments = ViewBag.Government;
+	List<string> Governments = new List<string>() { "Alexandria", "Aswan", "Asyut", "Beheira", "Beni Suef", "Cairo", "Dakahlia", "Damietta", "Faiyum", "Gharbia", "Giza", "Ismailia", "Kafr El Sheikh", "Luxor", "Matruh", "Minya", "Monufia", "New Valley", "North Sinai", "Port Said[5]", "Qalyubia", "Qena", "Red Sea", "Sharqia", "Sohag", "South Sinai", "Suez" };
 
-	List<string> Governments = new List<string>(){"Alexandria Governorate",
-"Aswan Governorate",
-"Asyut Governorate",
-"Beheira Governorate",
-"Beni Suef Governorate",
-"Cairo Governorate",
-"Dakahlia Governorate",
-"Damietta Governorate",
-"Faiyum Governorate",
-"Gharbia Governorate",
-"Giza Governorate",
-"Ismailia Governorate",
-"Kafr El Sheikh Governorate",
-"Luxor Governorate",
-"Matruh Governorate",
-"Minya Governorate",
-"Monufia Governorate",
-"New Valley Governorate",
-"North Sinai Governorate",
-"Port Said Governorate[5]",
-"Qalyubia Governorate",
-"Qena Governorate",
-"Red Sea Governorate",
-"Sharqia Governorate",
-"Sohag Governorate",
-"South Sinai Governorate",
-"Suez Governorate"};
+	
 }
 
 
@@ -43,8 +19,8 @@
 
 		@Html.AntiForgeryToken()
 
-		<div class="form-group">
-			@Html.LabelFor(m => m.Id)
+		<div class="form-group visually-hidden">
+			@Html.Label("National ID")
 			@Html.TextBoxFor(m => m.Id , new { @class = "form-control"})
 			@Html.ValidationMessageFor(m=>m.Id , null ,new { @class = "text-danger"})
 		</div>
@@ -91,16 +67,30 @@
 			@Html.ValidationMessageFor(m=>m.Balance , null ,new { @class = "text-danger"})
 		</div>
 
-
-
-
 		<div class="form-group">
-			@Html.LabelFor(m => m.Pin)
+			@Html.Label("PIN")
 			@Html.PasswordFor(m => m.Pin , new { @class = "form-control"})
 			@Html.ValidationMessageFor(m=>m.Pin , null ,new { @class = "text-danger"})
+			
 		</div>
-		<p class="text-warning fw-bolder">Please Enter The PIN To Confirm The Edit</p>
 
+	
+		<div class="form-group ">
+			@Html.Label("PIN Confirmation")
+			@Html.Password("PINcon" , null, new { @class = "form-control" })
+			@Html.ValidationMessageFor(m=>m.Pin , null ,new { @class = "text-danger"})
+			@{
+				if ((bool)ViewBag.PinError)
+				{
+					<p class="text-warning fw-bolder">Please Enter The PIN To Confirm The Edit</p>
+				}
+				else{
+					<p class="text-danger fw-bolder">Not the same PIN, Try again</p>
+				}
+			}
+		</div>
+
+		
 
 		<button type="submit" new { class="btn bg-success text-white my-4" }>Edit</button>
 
