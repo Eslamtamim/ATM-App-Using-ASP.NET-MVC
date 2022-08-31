@@ -12,8 +12,8 @@ using mvcTest1.Models;
 namespace mvcTest1.Migrations
 {
     [DbContext(typeof(AccountDbContext))]
-    [Migration("20220818092047_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220828113825_update-city")]
+    partial class updatecity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,40 +27,52 @@ namespace mvcTest1.Migrations
             modelBuilder.Entity("mvcTest1.Models.Account", b =>
                 {
                     b.Property<string>("Id")
-                        .HasMaxLength(50)
+                        .HasMaxLength(14)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("varchar(14)")
                         .HasColumnName("id");
 
                     b.Property<decimal?>("Balance")
+                        .IsRequired()
                         .HasColumnType("decimal(38,2)");
 
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("City")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("Government");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
                     b.Property<int?>("Pin")
+                        .IsRequired()
+                        .HasMaxLength(4)
                         .HasColumnType("int");
 
                     b.HasKey("Id");

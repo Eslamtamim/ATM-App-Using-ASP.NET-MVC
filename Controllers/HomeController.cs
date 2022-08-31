@@ -13,6 +13,7 @@ namespace mvcTest1.Controllers
         Ascending,
         Descending,
     }
+    
     public class HomeController : Controller
     {
         AccountDbContext context = new AccountDbContext();
@@ -25,13 +26,28 @@ namespace mvcTest1.Controllers
 
 
        
-        public IActionResult AllAccounts(string SortField, string CurrentSortField, sorting sortDir)
+        public IActionResult AllAccounts(string SortField, string CurrentSortField, sorting sortDir , string Search)
         {
 
           //  List<Account> accounts = context.Accounts.OrderBy(m => m.FirstName).ToList();
             var accounts = data();
+            ViewBag.Nomatch = false;
+            ViewBag.ViewTable = true;
             int count = 0;
             ViewBag.message = count;
+            if (accounts.Count > 0)
+            {
+                ViewBag.ViewTable = false;
+            }           
+            if (!string.IsNullOrEmpty(Search))
+            {
+                accounts = accounts.Where(a=> a.FullName.ToLower().Contains(Search.ToLower())).ToList();  
+            }
+            if(accounts.Count <= 0)
+            {
+                ViewBag.Nomatch = true;
+            }
+           
             return View(this.SortingData(accounts, SortField, CurrentSortField, sortDir));
         }
         public IActionResult Index()
@@ -43,27 +59,15 @@ namespace mvcTest1.Controllers
             return View();
         }
    
-        public IActionResult Accountinfo(string id)
+        public IActionResult Accountinfo(string Id)
         {
-          var  info = context.Accounts.FirstOrDefault(m => m.Id == id);
-
-            //var account = context.Accounts.FirstOrDefault(e => e.Id == loginId);
-
-                return View(info);
-           
-
+          var  info = context.Accounts.FirstOrDefault(m => m.Id == Id);
+                return View(info);           
         }
-
-        //////////////////////////////////////////////////////////////
 
         [HttpGet]
         public IActionResult Signup()
         {
-            //List<string> Governments = new List<string>() { "Alexandria", "Aswan", "Asyut", "Beheira", "Beni Suef", "Cairo", "Dakahlia", "Damietta", "Faiyum", "Gharbia", "Giza", "Ismailia", "Kafr El Sheikh", "Luxor", "Matruh", "Minya", "Monufia", "New Valley", "North Sinai", "Port Said[5]", "Qalyubia", "Qena", "Red Sea", "Sharqia", "Sohag", "South Sinai", "Suez" };
-           // ViewBag.Government = Governments;
-
-            //ViewBag.PinError = true;
-
             return View();
         }
 
@@ -73,34 +77,18 @@ namespace mvcTest1.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Signup(Account a)
         {
-            //if (Request.Form["Pin"] == Request.Form["Pincon"])
-            //{
-
-            //    if (ModelState.IsValid)
-            //    {
-            //        context.Accounts.Add(a);
-            //        context.SaveChanges();
-
-            //        return View("AllAccounts");
-            //    }
-            //    return View();
-
-            //}
-            //else
-            //{
-
-            //    ViewBag.PinError = false;
-            //    List<string> Governments = new List<string>() { "Alexandria", "Aswan", "Asyut", "Beheira", "Beni Suef", "Cairo", "Dakahlia", "Damietta", "Faiyum", "Gharbia", "Giza", "Ismailia", "Kafr El Sheikh", "Luxor", "Matruh", "Minya", "Monufia", "New Valley", "North Sinai", "Port Said[5]", "Qalyubia", "Qena", "Red Sea", "Sharqia", "Sohag", "South Sinai", "Suez" };
-            //    ViewBag.Government = Governments;
-
-            //    return View("Signup", a);
-            //}
-
             if (ModelState.IsValid)
             {
-                context.Accounts.Add(a);
-                context.SaveChanges();
-                return RedirectToAction("AllAccounts");
+                try
+                {
+                    context.Accounts.Add(a);
+                    context.SaveChanges();
+                    return RedirectToAction("AllAccounts");
+                }
+                catch
+                {
+                    return RedirectToAction("signup");
+                }
             }
             return View();
         }
@@ -135,8 +123,6 @@ namespace mvcTest1.Controllers
             else
                 accounts = accounts.OrderByDescending(m => info.GetValue(m, null)).ToList();
             return accounts;
-
-
         }
 
 

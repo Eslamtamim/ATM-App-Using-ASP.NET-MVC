@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using mvcTest1.Models;
 
@@ -11,9 +12,10 @@ using mvcTest1.Models;
 namespace mvcTest1.Migrations
 {
     [DbContext(typeof(AccountDbContext))]
-    partial class AccountDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220827124403_IntitialCreate")]
+    partial class IntitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,6 +39,12 @@ namespace mvcTest1.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(50)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -44,12 +52,6 @@ namespace mvcTest1.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("Government")
                         .IsRequired()
                         .HasMaxLength(50)
                         .IsUnicode(false)
@@ -69,7 +71,6 @@ namespace mvcTest1.Migrations
 
                     b.Property<int?>("Pin")
                         .IsRequired()
-                        .HasMaxLength(4)
                         .HasColumnType("int");
 
                     b.HasKey("Id");

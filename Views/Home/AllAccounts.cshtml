@@ -2,81 +2,117 @@
 
 @{
 	ViewData["Title"] = "Admin Page";
-
 }
-<div>
-<h2 class="text-primary">
-	Welcome as an Admin
-	here you can see all the Accounts details and more
-</h2>
-
-<h5 class="text-success mt-4">Accounts table</h5>
-<table class="table">
-	<thead>
-		<tr>
-				<th class="text-primary">#</th>
-			<th class="text-primary fw-bolder">Details</th>
-				<th>@Html.ActionLink("FullName" , "AllAccounts", new { SortField = "FirstName" , CurrentSortField = ViewBag.SortField  , SortDir = ViewBag.SortDir} , new{ @class = "link-success"})</th>
-				<th>@Html.ActionLink("PIN" , "AllAccounts", new { SortField = "Pin" , CurrentSortField = ViewBag.SortField  , SortDir = ViewBag.SortDir}, new{ @class = "link-success"})</th>
-				<th>@Html.ActionLink("PhoneNumber" , "AllAccounts", new { SortField = "PhoneNumber" , CurrentSortField = ViewBag.SortField  , SortDir = ViewBag.SortDir}, new{ @class = "link-success"})</th>
-				<th>@Html.ActionLink("E-mail" , "AllAccounts", new { SortField = "Email" , CurrentSortField = ViewBag.SortField  , SortDir = ViewBag.SortDir}, new{ @class = "link-success"})</th>
-				<th>@Html.ActionLink("Government" , "AllAccounts", new { SortField = "City" , CurrentSortField = ViewBag.SortField  , SortDir = ViewBag.SortDir}, new{ @class = "link-success"})</th>
-				<th>@Html.ActionLink("Balance" , "AllAccounts", new { SortField = "Balance" , CurrentSortField = ViewBag.SortField  , SortDir = ViewBag.SortDir}, new{ @class = "link-success"})</th>
-				<th class ="text-primary">Actions</th>
-		</tr>
-	</thead>
-
-	<tbody>
 
 
-		@{
-			foreach (var acc in Model)
-			{
-				ViewBag.message = ViewBag.message + 1;
-				<tr>
-					<td class="text-primary fw-bolder">@ViewBag.message</td>
-					<td>
-						<a href="@Url.Action("Accountinfo" , "home" , new { id = acc.Id})" class="btn bg-success text-white">
-							Go to
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
-								<path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0v-6z" />
-							</svg>
-						</a>
-					</td>
+<h2 class="text-primary">Welcome as an Admin here you can see all the Accounts details and more</h2>
 
-					<td>@acc.FirstName @acc.LastName</td>
-					<td>@acc.Pin</td>
-					<td>@acc.PhoneNumber</td>
-					<td>@acc.Email</td>
-					<td>@acc.City</td>
-					<td>@acc.Balance</td>
-					<td>
-					
-						<a href="@Url.Action("Edit", "Account" , new {id = acc.Id} )" class="btn bg-primary text-white">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-								<path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-							</svg>
-							<span>Edit</span>
-						</a>
-						<a href="@Url.Action("Delete", "Account" ,new { id = acc.Id})" class="btn bg-danger text-white">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
-								<path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-								<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-							</svg>
-							Delete
-						</a>
-					</td>
-				</tr>
-			}
-		}
-	</tbody>
 
-</table>
+<div class="alert alert-warning d-flex align-items-lg-center col-5 @(!(bool)ViewBag.ViewTable ? "visually-hidden" : " ") " role="alert">
+	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle me-2" viewBox="0 0 16 16">
+		<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+		<path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+	</svg>
+	<div>
+		No Accounts Found, create some
+	</div>
 </div>
 
+
+
+
+<div>
+	
+	<div class="@((bool)ViewBag.ViewTable ? "visually-hidden" : " ")">
+		<h5 class="text-success mt-4">Accounts table</h5>
+
+		@using (Html.BeginForm())
+		{
+			<div class="input-group col-5">
+				@Html.TextBox("Search" , null, new { @class = "form-control" , @id = "myTextField",  @placeholder = "Search By Name..."})
+				<input type="submit" value="Search" id="focusButton" class="btn btn-outline-success" />
+			</div>
+		}
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="text-primary">#</th>
+					<th class="text-primary fw-bolder">Details</th>
+					<th>@Html.ActionLink("FullName" , "AllAccounts", new { SortField = "FirstName" , CurrentSortField = ViewBag.SortField  , SortDir = ViewBag.SortDir} , new{ @class = "link-success"})</th>
+					<th>@Html.ActionLink("PIN" , "AllAccounts", new { SortField = "Pin" , CurrentSortField = ViewBag.SortField  , SortDir = ViewBag.SortDir}, new{ @class = "link-success"})</th>
+					<th>@Html.ActionLink("PhoneNumber" , "AllAccounts", new { SortField = "PhoneNumber" , CurrentSortField = ViewBag.SortField  , SortDir = ViewBag.SortDir}, new{ @class = "link-success"})</th>
+					<th>@Html.ActionLink("E-mail" , "AllAccounts", new { SortField = "Email" , CurrentSortField = ViewBag.SortField  , SortDir = ViewBag.SortDir}, new{ @class = "link-success"})</th>
+					<th>@Html.ActionLink("Birth Date" , "AllAccounts", new { SortField = "BirthDate" , CurrentSortField = ViewBag.SortField  , SortDir = ViewBag.SortDir}, new{ @class = "link-success"})</th>
+					<th>@Html.ActionLink("Government" , "AllAccounts", new { SortField = "Government" , CurrentSortField = ViewBag.SortField  , SortDir = ViewBag.SortDir}, new{ @class = "link-success"})</th>
+					<th>@Html.ActionLink("Balance" , "AllAccounts", new { SortField = "Balance" , CurrentSortField = ViewBag.SortField  , SortDir = ViewBag.SortDir}, new{ @class = "link-success"})</th>
+					<th class="text-primary">Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+
+				@{
+					foreach (var acc in Model)
+					{
+						ViewBag.message = ViewBag.message + 1;
+						<tr>
+							<td class="text-primary fw-bolder">@ViewBag.message</td>
+							<td>
+								<a href="@Url.Action("Accountinfo" , "home" , new { Id = acc.Id})" class="btn bg-success text-white">
+									Go to
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
+										<path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0v-6z" />
+									</svg>
+								</a>
+							</td>
+							@{
+								var fullname = acc.FullName;
+							}
+							<td>@Html.DisplayFor(m => acc.FullName)</td>
+							<td>@Html.DisplayFor(m => acc.Pin)</td>
+							<td>@Html.DisplayFor(m => acc.PhoneNumber)</td>
+							<td>@Html.DisplayFor(m => acc.Email)</td>
+							<td>@Html.DisplayFor(m => acc.BirthDate)</td>
+							<td>@Html.DisplayFor(m => acc.Government)</td>
+							<td>@Html.DisplayFor(m => acc.Balance)</td>
+							<td>
+
+								<a href="@Url.Action("Edit", "Account" , new {id = acc.Id} )" class="btn bg-primary text-white">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+										<path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+									</svg>
+									<span>Edit</span>
+								</a>
+								<a href="@Url.Action("Delete", "Account" ,new { id = acc.Id})" class="btn bg-danger text-white">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+										<path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+										<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+									</svg>
+									Delete
+								</a>
+							</td>
+						</tr>
+					}
+				}
+			</tbody>
+
+		</table>
+	</div>
+
+</div>
+<div class="alert alert-danger d-flex align-items-lg-center  @(!(bool)ViewBag.Nomatch ? "visually-hidden" : " ") " role="alert">
+	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-circle me-2" viewBox="0 0 16 16">
+		<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+		<path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+	</svg>
+	<div>
+		No Accounts Found, try again
+	</div>
+</div>
 <a class="btn btn-warning py-2" asp-area="" asp-controller="Home" asp-action="Signup">
 	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
 		<path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
 		<path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
 	</svg> Sign up
 </a>
+

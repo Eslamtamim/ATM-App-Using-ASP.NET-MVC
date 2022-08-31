@@ -2,12 +2,14 @@
 using mvcTest1.Models;
 using System.Security.Principal;
 
+
 namespace mvcTest1.Controllers
 {
+   
 	public class AccountController : Controller
 	{
 
-        AccountDbContext context = new();
+        readonly AccountDbContext context = new();
 
 
 
@@ -66,8 +68,11 @@ namespace mvcTest1.Controllers
         }
 
         [HttpGet]
-        public IActionResult Withdraw(string? id)
+        public IActionResult Withdraw(string? id )
         {
+            ViewBag.ErrorAmount = true;
+            ViewBag.ErrorAmountTooBig = true;
+            ViewBag.SuccessAmount = false;
             var account = context.Accounts.FirstOrDefault(context => context.Id == id);
             return View(account);
         }
@@ -78,10 +83,31 @@ namespace mvcTest1.Controllers
         {
             var account = context.Accounts.FirstOrDefault(context => context.Id == Id);
             string Amount = Request.Form["Amount"];
-            account.Balance -= int.Parse(Amount);
-            context.SaveChanges();
+            amount = int.Parse(Amount);
+
+            if (amount < account.Balance)
+            {
+               if (amount > 0 && amount % 50 == 0 ){
+                account.Balance -= amount;
+                context.SaveChanges();
+                ViewBag.ErrorAmount = true;
+                ViewBag.ErrorAmountTooBig = true;
+                ViewBag.SuccessAmount = true;
+                ViewBag.Amount = amount;
+                return View(account);
+               }
+                ViewBag.Amount = amount;
+                ViewBag.SuccessAmount = false;
+                ViewBag.ErrorAmount = false;
+                ViewBag.ErrorAmountTooBig = true;
+                return View(account);
+            }
+            ViewBag.Amount = amount;
+            ViewBag.SuccessAmount = false;
+            ViewBag.ErrorAmount = true;
+            ViewBag.ErrorAmountTooBig = false;
             return View(account);
-        }
+        }   
 
         [HttpGet]
         public IActionResult Deposite(string? id)

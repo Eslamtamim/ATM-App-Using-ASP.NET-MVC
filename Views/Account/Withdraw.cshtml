@@ -1,11 +1,9 @@
 ﻿@model Account
 
 <div>
-		
-	
-	<h3>
-		Hi, please enter the amount of money you want to take
-	</h3>
+	<h3>Hi, please enter the amount of money you want to take</h3>
+	<p class="opacity-75 text-success">Current Balance is <span class="fw-bolder">$@Model.Balance</span></p>
+
 	<form method="post" class="d-flex flex-column align-items-center mt-5" asp-action="Withdraw">
 
 
@@ -14,15 +12,25 @@
 
 			<label class="form-label">Amount</label>
 			<input class="form-control" name="Amount">
-
-			<button type="submit" new { class="btn bg-success text-white my-4 " }>Withdraw</button>
-			<a class="btn btn-outline-success" href="/Home/Accountinfo/@Model.Id">Back</a>
-
+			<p class="@((bool)ViewBag.ErrorAmount ? "visually-hidden" : "text-danger")">Please insert a positive number that is a multiple of 50</p>
+			<p class="@((bool)ViewBag.ErrorAmountTooBig ? "visually-hidden" : "text-danger")">You requested $@ViewBag.Amount but you only have $@Model.Balance</p>
 			
-		</div>
+			<div class="alert alert-success d-flex align-items-lg-center mt-2 @(!(bool)ViewBag.SuccessAmount ? "visually-hidden" : " ") " role="alert">
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+					<path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+				</svg>
+				<div class="ms-1">
+					Successfuly Withdrawed $@ViewBag.Amount, Your Balance now is $@Model.Balance
+				</div>
+			</div>
 
+			<button type="submit" new { class="btn bg-success text-white my-2 " }>Withdraw</button>
+			<a class="btn btn-outline-success" href="/Home/Accountinfo/@Model.Id">Back</a>
+		</div>
 	</form>
 
 
 </div>
- 
+
+
+
